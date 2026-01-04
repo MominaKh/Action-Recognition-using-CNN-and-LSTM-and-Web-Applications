@@ -1,0 +1,154 @@
+📋 Overview
+
+This project demonstrates an end-to-end workflow:
+
+Preprocess the Stanford 40 dataset
+
+Train a CNN-LSTM model for action recognition
+
+Deploy a REST API using FastAPI
+
+Interact via a web frontend with image upload and real-time inference
+
+Key Features:
+
+✅ CNN for spatial feature extraction
+✅ LSTM for sequential learning
+✅ 40 action classes recognition
+✅ Natural language annotation
+✅ REST API with FastAPI
+✅ Interactive web interface
+✅ Confidence scores and top-5 predictions
+
+🚀 Project Structure
+action-recognition-project/
+│
+├── kaggle_notebook/
+│   ├── kagglenotebook.ipynb
+│   ├\
+│   
+│       
+│       
+│
+├── backend/
+│   ├── api_backend.py
+│   ├── final_action_model.h5
+│   └── dataset_metadata.json
+│
+└── frontend/
+    └── index.html
+
+💻 Environment Setup
+Kaggle Notebook
+
+Install dependencies:
+
+!pip install fastapi uvicorn python-multipart pillow
+!pip install tensorflow==2.15.0
+
+
+Add Stanford 40 Actions Dataset to the notebook and run preprocessing:
+
+# dataset_preprocessing.py
+# - Load images
+# - Split into train/val/test
+# - Save processed arrays and metadata
+
+
+Expected Output:
+
+Train: ~6500 images
+Validation: ~800 images
+Test: ~800 images
+Number of classes: 40
+
+🏗 Model Training
+
+Run the CNN-LSTM training script:
+
+# model_training.py
+# CNN: ResNet50 (Feature Extraction)
+# LSTM: 2 layers (512 → 256 units)
+# Dense: 512 → 256 → 40 (Softmax)
+
+
+Expected Accuracy:
+
+Training: 85-90%
+
+Validation: 75-85%
+
+Test: 75-82%
+
+⚙️ Backend API Setup
+
+Create project directory and virtual environment
+
+mkdir action-recognition-api
+cd action-recognition-api
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux / Mac
+source venv/bin/activate
+
+
+Install dependencies
+
+pip install fastapi uvicorn python-multipart tensorflow pillow
+
+
+Add trained model and metadata
+
+final_action_model.h5
+
+dataset_metadata.json
+
+Run FastAPI server
+
+uvicorn api_backend:app --reload --host 0.0.0.0 --port 8000
+
+
+Test API:
+Open http://localhost:8000
+ → {"message": "Action Recognition API is running"}
+
+🌐 Frontend Setup
+
+Place index.html in a frontend folder
+
+Open in browser or run:
+
+python -m http.server 8080
+
+
+Access: http://localhost:8080
+
+Usage:
+
+Upload an image
+
+Click "Analyze Action"
+
+View predictions, confidence, and natural language annotation
+
+🧪 Testing the System
+
+cURL Example:
+
+curl -X POST "http://localhost:8000/predict" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@test_image.jpg"
+
+
+Multiple Images: Test with images from different action classes to verify generalization.
+
+📊 Performance
+Metric	Expected Value
+Test Accuracy	75-82%
+Top-5 Accuracy	90-95%
+Average Inference	50-100 ms/image
+
+Best Performing Actions: Reading, Cooking, Using Computer, Drinking
+Challenging Actions: Climbing, Fixing bike/car
